@@ -57,14 +57,17 @@
 
       $('.like-all').on('click', function() {
         panes.each(function(index) {
-          var pa = panes.eq(panes_count - index );
+          var pa = panes.eq(panes_count - index);
           setTimeout(function() {
-            pa.animate({"transform": "translate(" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(60deg)"}, $that.settings.animationSpeed);
+            pa.animate({"opacity": 0}, $that.settings.animationSpeed).css("display","none");
             if($that.settings.onLike) {
               $that.settings.onLike(pa);
             }
-            pa.hide();
-          }, time += $that.settings.animationSpeed / 4);
+
+            if ((panes_count - index) == 0 && $that.settings.onFinish) {
+              $that.settings.onFinish();
+            }
+          }, time += $that.settings.animationSpeed / 10);
         });
       });
     },
