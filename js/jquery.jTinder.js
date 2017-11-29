@@ -39,7 +39,9 @@
 
   Plugin.prototype = {
 
+
     init: function (element) {
+
       container = $(">ul", element);
       panes = $(">ul>li", element);
       pane_width = container.width();
@@ -61,6 +63,7 @@
             if($that.settings.onLike) {
               $that.settings.onLike(pa);
             }
+            pa.hide();
           }, time += $that.settings.animationSpeed / 4);
         });
       });
