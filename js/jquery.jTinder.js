@@ -75,8 +75,10 @@
       });
 
       $($that.settings.returnPanelSelector).on('click', function() {
-        panes.eq(current_pane + 1).show().animate({"transform": "translate(0px, 0px) rotate(0deg)"});
-        current_pane += 1;
+        if ((current_pane + 1) != panes.length) {
+          current_pane += 1;
+          panes.eq(current_pane).show().animate({"transform": "translate(0px, 0px) rotate(0deg)"});
+        }
       });
     },
 
