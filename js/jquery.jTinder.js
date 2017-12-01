@@ -18,7 +18,8 @@
       threshold: 1,
       likeSelector: '.like',
       dislikeSelector: '.dislike',
-      likeAllButtonSelector: '.like-all'
+      likeAllButtonSelector: '.like-all',
+      returnPanelSelector: '.return-button'
     };
 
   var container = null;
@@ -55,11 +56,13 @@
       var time = 0;
       var panes_count = current_pane;
 
-      $('.like-all').on('click', function() {
+      $($that.settings.likeAllButtonSelector).on('click', function() {
         panes.each(function(index) {
           var pa = panes.eq(panes_count - index);
           setTimeout(function() {
-            pa.animate({"opacity": 0}, $that.settings.animationSpeed).css("display","none");
+            pa.animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
+              pa.hide();
+            });
             if($that.settings.onLike) {
               $that.settings.onLike(pa);
             }
@@ -69,6 +72,11 @@
             }
           }, time += $that.settings.animationSpeed / 10);
         });
+      });
+
+      $($that.settings.returnPanelSelector).on('click', function() {
+        panes.eq(current_pane + 1).show().animate({"transform": "translate(0px, 0px) rotate(0deg)"});
+        current_pane += 1;
       });
     },
 
@@ -82,7 +90,7 @@
     },
 
     dislike: function() {
-      panes.eq(current_pane).animate({"transform": "translate(-" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(-60deg)"}, $that.settings.animationSpeed, function () {
+      panes.eq(current_pane).animate({"transform": "translate(-" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(-60deg)"}, $that.settings.animationSpeed, function () {
         if($that.settings.onDislike) {
           $that.settings.onDislike(panes.eq(current_pane));
         }
@@ -91,7 +99,7 @@
     },
 
     like: function() {
-      panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (pane_width*-1.5) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
+      panes.eq(current_pane).animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
         if($that.settings.onLike) {
           $that.settings.onLike(panes.eq(current_pane));
         }
