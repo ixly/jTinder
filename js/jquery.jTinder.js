@@ -49,7 +49,6 @@
       pane_count = panes.length;
       current_pane = panes.length - 1;
       $that = this;
-
       $(element).bind('touchstart mousedown', this.handler);
       $(element).bind('touchmove mousemove', this.handler);
       $(element).bind('touchend mouseup', this.handler);
@@ -77,7 +76,8 @@
       $($that.settings.returnPanelSelector).on('click', function() {
         if ((current_pane + 1) != panes.length) {
           current_pane += 1;
-          panes.eq(current_pane).show().animate({"transform": "translate(0px, 0px) rotate(0deg)"});
+          var angle = Math.floor((Math.random() * 10) + 2) - 6;
+          panes.eq(current_pane).show().animate({"transform": "translate(0px, 0px) rotate("+ angle +"deg)"});
         }
       });
     },
