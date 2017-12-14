@@ -61,6 +61,7 @@
           setTimeout(function() {
             pa.animate({"transform": "translate(" + (pane_width) + "px," + (posY + pane_width) + "px) rotate(60deg)"}, $that.settings.animationSpeed, function () {
               pa.hide();
+              $that.next();
             });
             if($that.settings.onLike) {
               $that.settings.onLike(pa);
